@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Text.Json;
 
-using Newtonsoft.Json;
-
-namespace SendSms.Core.Helpers
+namespace SendSms.Core.Helpers 
 {
     public static class Json
     {
@@ -11,7 +10,7 @@ namespace SendSms.Core.Helpers
         {
             return await Task.Run<T>(() =>
             {
-                return JsonConvert.DeserializeObject<T>(value);
+                return JsonSerializer.Deserialize<T>(value);
             });
         }
 
@@ -19,7 +18,7 @@ namespace SendSms.Core.Helpers
         {
             return await Task.Run<string>(() =>
             {
-                return JsonConvert.SerializeObject(value);
+                return JsonSerializer.Serialize(value);
             });
         }
     }

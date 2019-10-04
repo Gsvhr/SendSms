@@ -9,10 +9,16 @@
     <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
         <Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <!--
-                The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
-                Place your content here.
-            -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="ErrorText"  Margin="10,5,10,5" VerticalAlignment="Center"/>
+            <TextBox x:Name="Phone" Grid.Row="1" Margin="10,5,10,5" PlaceholderText="Номер телефона" />
+            <TextBox x:Name="Text" Grid.Row="2" Margin="10,5,10,5" PlaceholderText="Текст сообщения" VerticalAlignment="Stretch" />
+            <Button x:Name="Send" Command="{Binding SendCommand}"  Grid.Row="3" Margin="10,5,10,5" HorizontalAlignment="Stretch" Content="Отправить" />
         </Grid>
     </Grid>
 </Page>

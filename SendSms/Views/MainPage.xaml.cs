@@ -3,6 +3,7 @@
 using SendSms.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace SendSms.Views
 {
@@ -13,6 +14,12 @@ namespace SendSms.Views
         public MainPage()
         {
             InitializeComponent();
+        }
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            await ViewModel.LoadBalanceAsync();
         }
     }
 }
