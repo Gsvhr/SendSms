@@ -4,6 +4,6 @@
     {
         public string Status { get; set; }
         public ResponseOnBalanceRequest Status_code { get; set; }
-        public double balance { get; set; }
+        public double Balance { get; set; }
     }
 }

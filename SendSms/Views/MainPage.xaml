@@ -6,19 +6,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="ErrorText"  Margin="10,5,10,5" VerticalAlignment="Center"/>
-            <TextBox x:Name="Phone" Grid.Row="1" Margin="10,5,10,5" PlaceholderText="Номер телефона" />
-            <TextBox x:Name="Text" Grid.Row="2" Margin="10,5,10,5" PlaceholderText="Текст сообщения" VerticalAlignment="Stretch" />
-            <Button x:Name="Send" Command="{Binding SendCommand}"  Grid.Row="3" Margin="10,5,10,5" HorizontalAlignment="Stretch" Content="Отправить" />
+            <TextBlock x:Name="ErrorText" Text="{x:Bind ViewModel.Balance, Mode=OneWay}" />           
+            <TextBox x:Name="Phone" Grid.Row="1" PlaceholderText="Номер телефона" Margin="{StaticResource SmallTopMargin}" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="2" PlaceholderText="Создать сообщение по шаблону" Margin="{StaticResource SmallTopMargin}">
+                <x:String>Первое сообщение</x:String>
+                <x:String>Второе сообщение</x:String>
+                <x:String>Третье сообщение</x:String>
+                <x:String>Четвертое сообщение</x:String>
+            </ComboBox>
+            <TextBox x:Name="Text" Grid.Row="3" PlaceholderText="Текст сообщения" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Visible"  Margin="{StaticResource SmallTopMargin}" VerticalAlignment="Stretch" />
+            <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" >
+                <TextBlock Text="Количество символов:" Margin="{StaticResource SmallRightMargin}" />
+                <TextBlock x:Name="NumberOfChar" Text="{x:Bind Text.Text.Length.ToString(), Mode=OneWay}" Margin="{StaticResource SmallRightMargin}" Width="40"/>
+                <TextBlock Text="Стоимость сообщения:" Margin="{StaticResource SmallRightMargin}" />
+                <TextBlock x:Name="Price" Text="{x:Bind Text.Text.Length.ToString(), Mode=OneWay}" />
+            </StackPanel>
+            <Button x:Name="Send" Command="{Binding SendCommand}"  Grid.Row="5" Margin="{StaticResource SmallTopMargin}" HorizontalAlignment="Stretch" Content="Отправить" />
         </Grid>
     </Grid>
 </Page>

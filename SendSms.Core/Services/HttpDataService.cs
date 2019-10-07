@@ -10,7 +10,7 @@ namespace SendSms.Core.Services
 {
     public class HttpDataService
     {
-        private HttpClient client;
+        private readonly HttpClient client;
 
         public HttpDataService(string defaultBaseUrl = "https://sms.ru")
         {
@@ -24,7 +24,7 @@ namespace SendSms.Core.Services
 
         public async Task<T> GetAsync<T>(string uri)
         {
-            T result = default(T);
+            T result = default;
 
             var json = await client.GetStringAsync(uri);
             result = await Task.Run(() => JsonConvert.DeserializeObject<T>(json));
