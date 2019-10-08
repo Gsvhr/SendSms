@@ -12,9 +12,11 @@
         <helper:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme" />
     </Page.Resources>
 
-    <Grid Margin="{StaticResource MediumLeftRightMargin}">
+    <Grid Margin="{StaticResource MediumLeftRightMargin}">        
         <StackPanel
             x:Name="ContentArea">
+            <TextBlock Text="Настройки SMS.RU" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <TextBox Text="{x:Bind ViewModel.ApiId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Идентификатор пользователя на SMS.RU"  Margin="{StaticResource SmallTopBottomMargin}"/>
             <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
                 <TextBlock x:Uid="Settings_Theme" />

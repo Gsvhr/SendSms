@@ -185,4 +185,7 @@
     <value>Шаблоны</value>
     <comment>Navigation view item name for Template</comment>
   </data>
+  <data name="Settings_Api" xml:space="preserve">
+    <value>Настройки сервиса sms.ru</value>
+  </data>
 </root>
