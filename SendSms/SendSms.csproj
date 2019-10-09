@@ -209,6 +209,7 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="SendSms_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\ru-ru\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

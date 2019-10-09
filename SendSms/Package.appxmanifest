@@ -25,7 +25,7 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="RU-RU" />
   </Resources>
 
   <Applications>

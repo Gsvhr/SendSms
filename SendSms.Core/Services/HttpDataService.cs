@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
+using SendSms.Core.Helpers;
 
 namespace SendSms.Core.Services
 {
@@ -27,7 +27,7 @@ namespace SendSms.Core.Services
             T result = default;
 
             var json = await client.GetStringAsync(uri);
-            result = await Task.Run(() => JsonConvert.DeserializeObject<T>(json));
+            result = await Task.Run(() => Json.ToObjectAsync<T>(json));
 
             return result;
         }        
