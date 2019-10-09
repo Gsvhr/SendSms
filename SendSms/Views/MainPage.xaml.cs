@@ -19,7 +19,7 @@ namespace SendSms.Views
         {
             base.OnNavigatedTo(e);
 
-            await ViewModel.LoadBalanceAsync();
+            await ViewModel.InitAsync();
         }
     }
 }

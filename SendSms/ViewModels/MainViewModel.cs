@@ -29,7 +29,7 @@ namespace SendSms.ViewModels
         {
             get { return _phone; }
 
-            set { Set(ref _phone, value); CanSend = Phone.Length > 9; if (value != "") LoadTotalCostAsync(); }
+            set { Set(ref _phone, value); CanSend = Phone.Length > 9; if (value != "") LoadCostAsync(); }
         }
 
         private string _text;
@@ -37,7 +37,7 @@ namespace SendSms.ViewModels
         {
             get { return _text; }
 
-            set { Set(ref _text, value); if (value != "") LoadTotalCostAsync(); }
+            set { Set(ref _text, value); if (value != "") LoadCostAsync(); }
         }
 
         private string _totalCost;
@@ -79,10 +79,15 @@ namespace SendSms.ViewModels
             }            
         }
 
+        public async Task InitAsync()
+        {
+            await LoadBalanceAsync();
+        }
+
         public async Task LoadBalanceAsync() 
         {
-            var uri = $"my/balance?api_id={ApiId}&json=1";
-            var b = await http.GetAsync<ResponseSms>(uri);
+            var uri = $"my/balance?api_id={ApiId}&json=1&test=1";
+            var b = await http.GetAsync(uri);
             if (b.status == "OK")
             {
                 Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";
@@ -93,13 +98,13 @@ namespace SendSms.ViewModels
             }
         }
 
-        public async void LoadTotalCostAsync()  
+        public async void LoadCostAsync()  
         {
             if (CanSend)
             {
                 var p = PhoneNormalize.GetPhoneString(Phone);
-                var uri = $"sms/cost?api_id={ApiId}&to={p}&msg={Text}&json=1";
-                var c = await http.GetAsync<ResponseSms>(uri);
+                var uri = $"sms/cost?api_id={ApiId}&to={p}&msg={Text}&json=1&test=1";
+                var c = await http.GetAsync(uri);
                 foreach (var item in c.sms)
                 {
                     var a = item.Key;
@@ -116,7 +121,7 @@ namespace SendSms.ViewModels
         public async void SendSms ()
         {
             var p = PhoneNormalize.GetPhoneString(Phone);
-            var b = await http.GetAsync<ResponseSms>($"sms/send?api_id={ApiId}&to={p}&msg={Text}&json=1");
+            var b = await http.GetAsync($"sms/send?api_id={ApiId}&to={p}&msg={Text}&json=1&test=1");
             if (b.status == "OK")
             {
                 Text = Phone = "";                
@@ -125,7 +130,7 @@ namespace SendSms.ViewModels
             }
             else
             {
-                TotalCost = "Ошибка отправки сообщений.";
+                TotalCost = b.status_code.ToString();
             }
         }
     }

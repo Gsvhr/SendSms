@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SendSms.Core.Helpers;
+using SendSms.Core.Models;
 
 namespace SendSms.Core.Services
 {
@@ -22,14 +23,10 @@ namespace SendSms.Core.Services
             }
         }
 
-        public async Task<T> GetAsync<T>(string uri)
+        public async Task<ResponseSms> GetAsync(string uri)
         {
-            T result = default;
-
             var json = await client.GetStringAsync(uri);
-            result = await Task.Run(() => Json.ToObjectAsync<T>(json));
-
-            return result;
+            return await Json.ToObjectAsync<ResponseSms>(json);
         }        
     }
 }
