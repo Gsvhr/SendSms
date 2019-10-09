@@ -87,7 +87,10 @@ namespace SendSms.ViewModels
             {
                 Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";
             }
-            
+            else
+            {
+                Balance = b.status_code.ToString();
+            }
         }
 
         public async void LoadTotalCostAsync()  
