@@ -1,7 +1,5 @@
-﻿using System;
-
-using SendSms.Services;
-
+﻿using SendSms.Services;
+using System;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 

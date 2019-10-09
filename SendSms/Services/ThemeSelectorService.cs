@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SendSms.Helpers;
+using System;
 using System.Threading.Tasks;
-
-using SendSms.Helpers;
-
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;

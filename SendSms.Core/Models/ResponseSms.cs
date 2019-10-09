@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace SendSms.Core.Models 
+namespace SendSms.Core.Models
 {
     public class ResponseSms
     {
         public string status { get; set; }
 
-        public ResponseOnBalanceRequest status_code { get; set; }
+        public ResponseOnRequest status_code { get; set; }
 
         public Dictionary<string, Sms> sms { get; set; }
 

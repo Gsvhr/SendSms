@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using SendSms.ViewModels;
 
 using Windows.UI.Xaml.Controls;

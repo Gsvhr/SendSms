@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-
-using SendSms.Core.Helpers;
+﻿using SendSms.Core.Helpers;
 using SendSms.Core.Models;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SendSms.Core.Services
 {
@@ -27,6 +24,6 @@ namespace SendSms.Core.Services
         {
             var json = await client.GetStringAsync(uri);
             return await Json.ToObjectAsync<ResponseSms>(json);
-        }        
+        }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using SendSms.Helpers;
+using SendSms.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
-using SendSms.Helpers;
-using SendSms.Services;
-
 using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -14,7 +11,7 @@ namespace SendSms.ViewModels
     // TODO WTS: Add other settings as necessary. For help see https://github.com/Microsoft/WindowsTemplateStudio/blob/master/docs/pages/settings.md
     public class SettingsViewModel : Observable
     {
-        private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings; 
+        private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         private ElementTheme _elementTheme = ThemeSelectorService.Theme;
 
@@ -40,9 +37,10 @@ namespace SendSms.ViewModels
         {
             get { return _apiId; }
 
-            set { 
+            set
+            {
                 if (_apiId != value)
-                localSettings.Values["APIID"] = value;
+                    localSettings.Values["APIID"] = value;
                 Set(ref _apiId, value);
             }
         }

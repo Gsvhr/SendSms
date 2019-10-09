@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Text.Json;
 using System.Threading.Tasks;
-using System.Text.Json;
 
-namespace SendSms.Core.Helpers 
+namespace SendSms.Core.Helpers
 {
     public static class Json
     {

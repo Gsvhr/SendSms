@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SendSms.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using SendSms.Core.Models;
 
 namespace SendSms.Core.Services
 {

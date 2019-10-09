@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SendSms.Services;
+using System;
 using System.Threading.Tasks;
-
-using SendSms.Services;
-
 using Windows.ApplicationModel.Activation;
 
 namespace SendSms.Activation

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-
-using SendSms.Core.Models;
+﻿using SendSms.Core.Models;
 using SendSms.Core.Services;
 using SendSms.Helpers;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace SendSms.ViewModels
 {

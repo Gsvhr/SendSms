@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using SendSms.Helpers;
 
 namespace SendSms.ViewModels

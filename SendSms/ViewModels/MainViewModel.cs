@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using SendSms.Core.Helpers;
-using SendSms.Core.Models;
+﻿using SendSms.Core.Helpers;
 using SendSms.Core.Services;
 using SendSms.Helpers;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Storage;
 
 namespace SendSms.ViewModels
@@ -13,7 +11,7 @@ namespace SendSms.ViewModels
     {
         private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
-        private readonly string ApiId; 
+        private readonly string ApiId;
 
         private readonly HttpDataService http = new HttpDataService();
         private string _balance;
@@ -25,7 +23,7 @@ namespace SendSms.ViewModels
         }
 
         private string _phone;
-        public string Phone 
+        public string Phone
         {
             get { return _phone; }
 
@@ -33,7 +31,7 @@ namespace SendSms.ViewModels
         }
 
         private string _text;
-        public string Text 
+        public string Text
         {
             get { return _text; }
 
@@ -41,7 +39,7 @@ namespace SendSms.ViewModels
         }
 
         private string _totalCost;
-        public string TotalCost 
+        public string TotalCost
         {
             get { return _totalCost; }
 
@@ -76,7 +74,7 @@ namespace SendSms.ViewModels
             if (localSettings.Values.Keys.Contains("APIID"))
             {
                 ApiId = localSettings.Values["APIID"].ToString();
-            }            
+            }
         }
 
         public async Task InitAsync()
@@ -84,7 +82,7 @@ namespace SendSms.ViewModels
             await LoadBalanceAsync();
         }
 
-        public async Task LoadBalanceAsync() 
+        public async Task LoadBalanceAsync()
         {
             var uri = $"my/balance?api_id={ApiId}&json=1&test=1";
             var b = await http.GetAsync(uri);
@@ -98,7 +96,7 @@ namespace SendSms.ViewModels
             }
         }
 
-        public async void LoadCostAsync()  
+        public async void LoadCostAsync()
         {
             if (CanSend)
             {
@@ -118,20 +116,24 @@ namespace SendSms.ViewModels
             }
         }
 
-        public async void SendSms ()
+        public async void SendSms()
         {
             var p = PhoneNormalize.GetPhoneString(Phone);
             var b = await http.GetAsync($"sms/send?api_id={ApiId}&to={p}&msg={Text}&json=1&test=1");
             if (b.status == "OK")
             {
-                Text = Phone = "";                
+                Text = Phone = "";
                 Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";
-                TotalCost = "Сообщения отправлены!";
+                TotalCost = "";
+                foreach (var item in b.sms)
+                {
+                    TotalCost += item.Key + " : " + item.Value.status_code + ", ";
+                }
             }
             else
             {
                 TotalCost = b.status_code.ToString();
-            }
+            }            
         }
     }
 }
