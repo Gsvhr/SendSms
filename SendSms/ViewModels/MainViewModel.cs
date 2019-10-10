@@ -1,5 +1,6 @@
 ﻿using SendSms.Core.Helpers;
 using SendSms.Core.Services;
+using SendSms.EntityFramework;
 using SendSms.Helpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -127,7 +128,12 @@ namespace SendSms.ViewModels
                 TotalCost = "";
                 foreach (var item in b.sms)
                 {
-                    TotalCost += item.Key + " : " + item.Value.status_code + ", ";
+                    TotalCost += item.Key.ToString() + " : " + item.Value.status_code + ", ";
+                    using (var db = new SendSmsContext())
+                    {
+                        db.Add(item.Value);
+                        db.SaveChanges();
+                    }
                 }
             }
             else

@@ -1,4 +1,6 @@
-﻿using SendSms.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using SendSms.EntityFramework;
+using SendSms.Services;
 using System;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -18,7 +20,11 @@ namespace SendSms
         {
             InitializeComponent();
 
-            // Deferred execution until used. Check https://msdn.microsoft.com/library/dd642331(v=vs.110).aspx for further info on Lazy<T> class.
+            using (var db = new SendSmsContext())
+            {
+                db.Database.Migrate();
+            }
+
             _activationService = new Lazy<ActivationService>(CreateActivationService);
         }
 

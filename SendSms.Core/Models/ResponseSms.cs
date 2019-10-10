@@ -8,7 +8,7 @@ namespace SendSms.Core.Models
 
         public ResponseOnRequest status_code { get; set; }
 
-        public Dictionary<string, Sms> sms { get; set; }
+        public Dictionary<string, Message> sms { get; set; }
 
         public double balance { get; set; }
 
