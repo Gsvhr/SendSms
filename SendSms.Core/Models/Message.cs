@@ -10,7 +10,7 @@ namespace SendSms.Core.Models
         public string phone { get; set; }
         public string content { get; set; }
         public string status { get; set; }
-        public ResponseOnRequest status_code { get; set; }        
+        public ResponseOnRequest status_code { get; set; }
         public int sms { get; set; }
         public DateTime time { get; set; }
     }

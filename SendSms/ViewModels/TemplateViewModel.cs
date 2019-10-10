@@ -1,11 +1,10 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using SendSms.Core.Models;
 using SendSms.EntityFramework;
 using SendSms.Helpers;
-using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -36,6 +35,30 @@ namespace SendSms.ViewModels
             }
         }
 
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                {
+                    _deleteCommand = new RelayCommand(DeleteTemplate);
+                }
+
+                return _deleteCommand;
+            }
+        }
+
+        private void DeleteTemplate()
+        {
+            using (var db = new SendSmsContext())
+            {
+                db.Templates.Remove(Selected);
+                db.SaveChanges();
+            }
+            Source.Remove(Selected);
+        }
+
         private void AddTemplate()
         {
             var t = new Template();
@@ -53,7 +76,7 @@ namespace SendSms.ViewModels
 
             using (var db = new SendSmsContext())
             {
-                var data = await db.Templates.AsNoTracking().OrderByDescending(x => x.Title).ToListAsync();
+                var data = await db.Templates.AsNoTracking().OrderBy(x => x.Title).ToListAsync();
                 foreach (var item in data)
                 {
                     Source.Add(item);

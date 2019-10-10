@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SendSms.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SendSms.EntityFramework
 {
@@ -13,7 +8,7 @@ namespace SendSms.EntityFramework
         public DbSet<Template> Templates { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public SendSmsContext() 
+        public SendSmsContext()
         {
             Database.EnsureCreated();
         }

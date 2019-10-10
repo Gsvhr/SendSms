@@ -10,7 +10,7 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="commandBar">
             <AppBarButton Label="Добавить" Icon="Add" Command="{x:Bind ViewModel.AddCommand}"/>
-            <AppBarButton Label="Удалить" Icon="Delete" />
+            <AppBarButton Label="Удалить" Icon="Delete" Command="{x:Bind ViewModel.DeleteCommand}"/>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid x:Name="ContentArea" Margin="{StaticResource SmallLeftRightMargin}">

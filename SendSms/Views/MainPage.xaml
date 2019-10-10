@@ -18,7 +18,7 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="ErrorText" Text="{x:Bind ViewModel.Balance, Mode=OneWay}" VerticalAlignment="Top" />
             <TextBox x:Name="Phone" Grid.Row="1" PlaceholderText="Номера телефонов через запятую в любом формате" Text="{x:Bind ViewModel.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource SmallTopMargin}" VerticalAlignment="Center"/>
-            <ComboBox Grid.Row="2" PlaceholderText="Создать сообщение по шаблону" Margin="{StaticResource SmallTopMargin}"/>
+            <ComboBox Grid.Row="2" ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}" DisplayMemberPath="Title" SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}" PlaceholderText="Создать сообщение по шаблону" Margin="{StaticResource SmallTopMargin}"/>
             <TextBox x:Name="Text" Grid.Row="3" PlaceholderText="Текст сообщения" Text="{x:Bind ViewModel.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Visible"  Margin="{StaticResource SmallTopMargin}" VerticalAlignment="Stretch" />
             <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" >
                 <TextBlock Text="Количество символов:" Margin="{StaticResource SmallRightMargin}" />

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using SendSms.EntityFramework;
+﻿using SendSms.EntityFramework;
 using SendSms.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -19,7 +17,6 @@ namespace SendSms.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
             await ViewModel.LoadDataAsync();
         }
 
@@ -29,15 +26,7 @@ namespace SendSms.Views
 
             using (var db = new SendSmsContext())
             {
-                var n = db.Templates.FirstOrDefault(x => x.Id == t.Id);
-                if (n == null)
-                {
-                    db.Add(t);
-                }
-                else
-                {
-                    db.Entry(n).CurrentValues.SetValues(t);
-                }
+                db.Templates.Update(ViewModel.Selected);
                 db.SaveChanges();
             }
         }

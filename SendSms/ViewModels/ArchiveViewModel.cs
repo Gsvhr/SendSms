@@ -34,7 +34,7 @@ namespace SendSms.ViewModels
                 var ids = "";
                 var sends = await db.Messages.AsNoTracking().Where(x => (x.status_code == ResponseOnRequest.Отправлено || x.status_code == ResponseOnRequest.Сообщение_отправлено)).ToListAsync();
 
-                if (sends?.Count >0)
+                if (sends?.Count > 0)
                 {
                     foreach (var item in sends)
                     {
@@ -44,14 +44,14 @@ namespace SendSms.ViewModels
 
                 Dictionary<string, Message> d = null;
 
-                if (ids.Length>1)
+                if (ids.Length > 1)
                 {
-                    ids = ids.Remove(ids.Length-1);
+                    ids = ids.Remove(ids.Length - 1);
                     var uri = $"sms/status?api_id={ApiId}&sms_id={ids}&json=1";
                     d = (await http.GetAsync(uri))?.sms;
-                }               
+                }
 
-                if ( d?.Count>0)
+                if (d?.Count > 0)
                 {
                     foreach (var item in d)
                     {
@@ -60,11 +60,11 @@ namespace SendSms.ViewModels
                         db.SaveChanges();
                     }
                 }
-                
+
                 var data = await db.Messages.AsNoTracking().OrderByDescending(x => x.time).ToListAsync();
                 foreach (var item in data)
                 {
-                    Source.Add(item);                    
+                    Source.Add(item);
                 }
             }
         }

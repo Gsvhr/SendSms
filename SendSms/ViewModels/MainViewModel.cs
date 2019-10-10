@@ -1,8 +1,12 @@
-﻿using SendSms.Core.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using SendSms.Core.Helpers;
+using SendSms.Core.Models;
 using SendSms.Core.Services;
 using SendSms.EntityFramework;
 using SendSms.Helpers;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -11,11 +15,16 @@ namespace SendSms.ViewModels
 {
     public class MainViewModel : Observable
     {
-        private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-        private readonly string ApiId;
-
         private readonly HttpDataService http = new HttpDataService();
+        private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        private readonly string ApiId;
+        public ObservableCollection<Template> Source { get; } = new ObservableCollection<Template>();
+        private Template _selected;
+        public Template Selected
+        {
+            get { return _selected; }
+            set { Set(ref _selected, value); Text = Selected.Content; }
+        }
         private string _balance;
         public string Balance
         {
@@ -82,6 +91,7 @@ namespace SendSms.ViewModels
         public async Task InitAsync()
         {
             await LoadBalanceAsync();
+            await LoadDataAsync();
         }
 
         public async Task LoadBalanceAsync()
@@ -124,7 +134,7 @@ namespace SendSms.ViewModels
         public async void SendSms()
         {
             var p = PhoneNormalize.GetPhoneString(Phone);
-            var b = await http.GetAsync($"sms/send?api_id={ApiId}&to={p}&msg={Text}&json=1&test=1");
+            var b = await http.GetAsync($"sms/send?api_id={ApiId}&to={p}&msg={Text}&json=1");
             if (b.status == "OK")
             {
                 TotalCost = "";
@@ -142,12 +152,26 @@ namespace SendSms.ViewModels
                     }
                 }
                 Text = Phone = "";
-                Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";                
+                Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";
             }
             else
             {
                 TotalCost = b.status_code.ToString();
-            }            
+            }
+        }
+
+        public async Task LoadDataAsync()
+        {
+            Source.Clear();
+
+            using (var db = new SendSmsContext())
+            {
+                var data = await db.Templates.AsNoTracking().OrderBy(x => x.Title).ToListAsync();
+                foreach (var item in data)
+                {
+                    Source.Add(item);
+                }
+            }
         }
     }
 }

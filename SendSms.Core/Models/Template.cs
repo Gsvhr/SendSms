@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SendSms.Core.Models
+﻿namespace SendSms.Core.Models
 {
     public class Template
     {
