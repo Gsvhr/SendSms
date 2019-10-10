@@ -3,6 +3,7 @@ using SendSms.Core.Models;
 using SendSms.Core.Services;
 using SendSms.EntityFramework;
 using SendSms.Helpers;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,13 +29,12 @@ namespace SendSms.ViewModels
         {
             Source.Clear();
 
-            // TODO WTS: Replace this with your actual data
             using (var db = new SendSmsContext())
             {
                 var ids = "";
                 var sends = await db.Messages.AsNoTracking().Where(x => (x.status_code == ResponseOnRequest.Отправлено || x.status_code == ResponseOnRequest.Сообщение_отправлено)).ToListAsync();
 
-                if (sends != null && sends.Count >0)
+                if (sends?.Count >0)
                 {
                     foreach (var item in sends)
                     {
@@ -42,19 +42,18 @@ namespace SendSms.ViewModels
                     }
                 }
 
-                var d = new ResponseSms();
+                Dictionary<string, Message> d = null;
 
                 if (ids.Length>1)
                 {
-                    ids.Remove(ids.Length - 1);
+                    ids = ids.Remove(ids.Length-1);
                     var uri = $"sms/status?api_id={ApiId}&sms_id={ids}&json=1";
-                    d = await http.GetAsync(uri);
+                    d = (await http.GetAsync(uri))?.sms;
                 }               
 
-                var c = d.sms;
-                if ( c != null && c.Count>0)
+                if ( d?.Count>0)
                 {
-                    foreach (var item in c)
+                    foreach (var item in d)
                     {
                         var s = db.Messages.SingleOrDefault(x => x.sms_id == item.Key);
                         s.status_code = item.Value.status_code;
