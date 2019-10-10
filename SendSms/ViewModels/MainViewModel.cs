@@ -2,6 +2,7 @@
 using SendSms.Core.Services;
 using SendSms.EntityFramework;
 using SendSms.Helpers;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -85,7 +86,7 @@ namespace SendSms.ViewModels
 
         public async Task LoadBalanceAsync()
         {
-            var uri = $"my/balance?api_id={ApiId}&json=1&test=1";
+            var uri = $"my/balance?api_id={ApiId}&json=1";
             var b = await http.GetAsync(uri);
             if (b.status == "OK")
             {
@@ -102,14 +103,17 @@ namespace SendSms.ViewModels
             if (CanSend)
             {
                 var p = PhoneNormalize.GetPhoneString(Phone);
-                var uri = $"sms/cost?api_id={ApiId}&to={p}&msg={Text}&json=1&test=1";
+                var uri = $"sms/cost?api_id={ApiId}&to={p}&msg={Text}&json=1";
                 var c = await http.GetAsync(uri);
-                foreach (var item in c.sms)
+                if (c.status == "OK")
                 {
-                    var a = item.Key;
-                    var b = item.Value;
+                    foreach (var item in c.sms)
+                    {
+                        var a = item.Key;
+                        var b = item.Value;
+                    }
+                    TotalCost = "Сообщений: " + c.total_sms.ToString() + "     Общая стоимость: " + c.total_cost.ToString() + " руб.";
                 }
-                TotalCost = "Сообщений: " + c.total_sms.ToString() + "     Общая стоимость: " + c.total_cost.ToString() + " руб.";
             }
             else
             {
@@ -123,18 +127,22 @@ namespace SendSms.ViewModels
             var b = await http.GetAsync($"sms/send?api_id={ApiId}&to={p}&msg={Text}&json=1&test=1");
             if (b.status == "OK")
             {
-                Text = Phone = "";
-                Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";
                 TotalCost = "";
                 foreach (var item in b.sms)
                 {
-                    TotalCost += item.Key.ToString() + " : " + item.Value.status_code + ", ";
+                    var phone = item.Key.ToString();
+                    TotalCost += phone + " : " + item.Value.status_code + ", ";
+                    item.Value.phone = phone;
+                    item.Value.content = Text;
+                    item.Value.time = DateTime.Now;
                     using (var db = new SendSmsContext())
                     {
                         db.Add(item.Value);
                         db.SaveChanges();
                     }
                 }
+                Text = Phone = "";
+                Balance = "Баланс составляет: " + b.balance.ToString() + " руб.";                
             }
             else
             {
