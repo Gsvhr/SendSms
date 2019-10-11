@@ -1,12 +1,13 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using SendSms.Core.Models;
-using SendSms.EntityFramework;
-using SendSms.Helpers;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
+using SendSms.Core.Models;
+using SendSms.EntityFramework;
+using SendSms.Helpers;
+using Windows.UI.Xaml.Controls;
 
 namespace SendSms.ViewModels
 {
@@ -49,14 +50,27 @@ namespace SendSms.ViewModels
             }
         }
 
-        private void DeleteTemplate()
+        private async void DeleteTemplate()
         {
-            using (var db = new SendSmsContext())
+            ContentDialog deleteDialog = new ContentDialog
             {
-                db.Templates.Remove(Selected);
-                db.SaveChanges();
+                Title = "Вы действительно хотите удалить шаблон?",
+                Content = "Восстановление будет не возможным. Продолжить?",
+                PrimaryButtonText = "Удалить",
+                CloseButtonText = "Отмена"
+            };
+
+            ContentDialogResult result = await deleteDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                using (var db = new SendSmsContext())
+                {
+                    db.Templates.Remove(Selected);
+                    db.SaveChanges();
+                }
+                Source.Remove(Selected);
             }
-            Source.Remove(Selected);
         }
 
         private void AddTemplate()

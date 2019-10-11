@@ -10,13 +10,13 @@
   <Identity
     Name="4AF3DD8A-4BFC-4546-856C-35A917DD81AA"
     Publisher="CN=step"
-    Version="1.0.0.0" />
+    Version="1.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="4AF3DD8A-4BFC-4546-856C-35A917DD81AA" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>SendSms</DisplayName>
-    <PublisherDisplayName>step</PublisherDisplayName>
+    <PublisherDisplayName>Степан Горшенин</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -25,7 +25,9 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="RU-RU" />
+    <Resource Language="x-generate" />
+    <Resource Language="en-US"/>
+    <Resource Language="ru-RU"/>
   </Resources>
 
   <Applications>
@@ -33,12 +35,12 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="SendSms.App">
       <uap:VisualElements
-        DisplayName="ms-resource:AppDisplayName"
+        DisplayName="СУДЭКСПЕРТ СМС"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="ms-resource:AppDescription"
+        Description="Приложение для отправки смс сообщений."
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
 
