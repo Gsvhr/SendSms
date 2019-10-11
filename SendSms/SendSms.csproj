@@ -274,7 +274,6 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="SendSms_TemporaryKey.pfx" />
-    <None Include="Sudexpert.pfx" />
     <PRIResource Include="Strings\ru-RU\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
