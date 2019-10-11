@@ -64,10 +64,13 @@ namespace SendSms.ViewModels
 
             if (result == ContentDialogResult.Primary)
             {
-                using (var db = new SendSmsContext())
+                if (Selected?.Id != 0)
                 {
-                    db.Templates.Remove(Selected);
-                    db.SaveChanges();
+                    using (var db = new SendSmsContext())
+                    {
+                        db.Templates.Remove(Selected);
+                        db.SaveChanges();
+                    }
                 }
                 Source.Remove(Selected);
             }
